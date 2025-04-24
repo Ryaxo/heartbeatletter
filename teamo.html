@@ -1,0 +1,286 @@
+<!--
+        ******       ******
+      **********   **********
+    ************* *************
+   *******************************
+  *********************************
+  *********************************
+  *********************************
+   *******************************
+    ****************************
+      ***********************
+        *******************
+          ***************
+            ***********
+              *******
+                ***
+                 *
+
+      Te amo, Laura Telles Gomes 
+       Minha Balinha 💜
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cartinha de Amor 💌</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #ffe6f0, #fff);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .titulo-topo {
+      position: absolute;
+      top: 70px;
+      width: 100%;
+      text-align: center;
+      font-size: 2.5rem;
+      color: #d63384;
+      font-weight: bold;
+      z-index: 5;
+    }
+
+    .emoji-carta {
+      font-size: 5rem;
+      cursor: pointer;
+      transition: transform 0.6s ease;
+      position: fixed;
+      z-index: 2;
+      bottom: 35%;
+    }
+
+    .emoji-carta.mover-para-baixo {
+      transform: translateY(120px);
+    }
+
+    .mensagem-wrapper {
+      margin-bottom: 90px;
+      background: #d0ecff;
+      color: #00324c;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      max-width: 90%;
+      width: 400px;
+      text-align: center;
+      z-index: 3;
+    }
+
+    .fundo-escuro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    .fundo-escuro.ativo {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .fundo-escuro.ativo::after {
+      content: "Continua clicando pra sortear mais cartinhas 🥰";
+      position: absolute;
+      bottom: 15%;
+      text-align: center;
+      font-size: 1rem;
+      color: #fff;
+      opacity: 0.9;
+    }
+
+    .emoji-caindo, .imagem-caindo {
+      position: fixed;
+      animation: cair 5s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes cair {
+      0% {
+        top: -10%;
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+        transform: translateY(100px) rotate(360deg);
+      }
+    }
+
+    .frase-final {
+      position: absolute;
+      bottom: 20px;
+      font-size: 1.1rem;
+      color: #99004d;
+      text-align: center;
+      width: 100%;
+      font-style: italic;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="titulo-topo">Batimentos através das palavras 💖</div>
+
+  <div class="mensagem-wrapper" id="mensagem">Clica na cartinha do mozi! 💌</div>
+
+  <div class="emoji-carta" id="carta" onclick="mostrarMensagem()">💌</div>
+
+  <div class="fundo-escuro" id="fundo" onclick="esconderMensagem()"></div>
+
+  <p class="frase-final">
+    Alguns dos infinitos motivos que tornam meu amor por ti imensurável.
+  </p>
+
+  <audio id="som" src="I colori dell'amore.mp3" preload="auto" style="display: none;"></audio>
+
+  <script>
+    const mensagemFinal = "Eu tenho certeza absoluta que poderia ficar décadas, séculos, escrevendo sobre como és maravilhosa, sobre o quanto eu te amo, em todos os detalhes, de corpo e alma. Não existem palavras no mundo que consigam confortar o tamanho do amor sinto por ti. Do fundo do meu âmago, te amo, mulher da minha vida. 💜";
+
+    const mensagensOriginais = [
+      "Só de pensar no carinho do teu abraço, na ternura do teu beijo e na imensidão do nosso amor, meu coração se aquece de um jeito único, por ti, radiante como o sol, aquela que chamo de amor da minha vida.",
+      "Amo o castanho dos teus olhos. Amo como ele brilha. A imensidão do teu olhar, tão deslumbrante como um céu estrelado e radiante como um dia ensolarado.",
+      "O jeitinho que cuidas de mim. O jeitinho de mostrar que se importa. Aquele jeito doce de demonstrar carinho, o carinho que desejo para toda a minha vida.",
+      "O brilho nos teus olhos quando falas sobre o teu dia, a empolgação na tua voz, são melodias que jamais cansarei de ouvir",
+      "Tu tranforma cada momento em lembranças inesquecíveis.",
+      "O jeito que o teu carinho me acalma.",
+      "A leveza que dás ao meu coração",
+      "Como consegues me entender, mesmo sem eu dizer uma palavra.",
+      "Amo, o nosso amor, amo muito mesmo. Nossa dinâmica, nossa parceria, nossas conversas, nosso carinho, nosso tudo.",
+      "Obrigado por me dar significado à palavra amor. Um significado tão profundo e belo. Um sonho bonito que tanto sonhei.",
+      "Amo o teu jeito de se expressar. A tua imensidão nos pequenos gestos, sempre carregados de carinho e amor. Um simples gesto, uma risada, um sorriso, uma palavra. Significam um oceano.",
+      "Amo como me apaixono por ti diariamente. Por todos os detalhes, todas as manias. De corpo e alma, para sempre teu.",
+      "Amo te ouvir falar. Sobre qualquer coisa. Te ouvir falar sobre o teu dia, sobre o trabalho, sobre as ansiedades.",
+      "Amo as nossas caminhadas. Amo ver o teu cabelo ao vento, conversar enquanto caminhamos de mãos dadas. Se for ao teu lado, eu vou para qualquer lugar.",
+      "Tu adoça a minha vida de um jeito tão leve, carinhoso, e claro, Doce.",
+      "Amo quando me chamas de Anjo, Meu amor, Meu bem, Mozi.",
+      "Adoro o jeito que tu me inspira, me apoia, e me motiva. Me inspira a ser melhor, me motiva a correr atrás, não desistir. E me apoia quando estou um tanto para baixo. Sou grato por cada palavra tua, cada gesto, cada 'estou aqui'. Contigo, me sinto invencível, como se pudesse alcançar o céu em um pulo.",
+      "Amo o nosso chameguinho, ficar deitado bem abraçadinho contigo, não tem preço.",
+      "Amo sentir o calor do teu corpo, sentir o teu toque, a perfeição dos teus detalhes.",
+      "Amo sorrir contigo dormindo ao meu lado. Olho pra ti dormindo e percebo a sorte que tenho em te ter ao meu lado.",
+      "Amo nosso jeitinho de conversar, nosso diálogo. Sobre qualquer coisa, sempre, é muito precioso.",
+      "Eu amo te amar, Laura. Amo do fundo do meu âmago.",
+      "Amo cozinhar ao teu lado. Adoro ouvir a nossa musiquinha enquanto cozinhamos, testar as receitas que vemos na internet. É sempre muito prazeroso, com a receita dando certo ou não.",
+      "Adoro a tua culinária, teu almoço, tua janta, tua sobremesa. Amo o teu jeito delicado de preparar, e de como tudo sempre fica maravilhoso.",
+      "Amo fazer qualquer coisa contigo. Seja passear, conversar, comer, jogar, dormir. Não importa o que estejamos fazendo, estar ao teu lado é sempre meu lugar favorito",
+      "Tua presença radiante traz leveza, amor e carinho para a minha vida, e afugenta o mais escuro dos dias.",
+      "Amo nossos banhos, nossos momentos de carinho, de conexão, de amor.",
+    ];
+
+    let mensagensRestantes = [...mensagensOriginais];
+
+    const mensagemEl = document.getElementById("mensagem");
+    const fundo = document.getElementById("fundo");
+    const carta = document.getElementById("carta");
+    const som = document.getElementById("som");
+    som.volume = 0.3;
+
+    let cartaAberta = false;
+    let musicaTocando = false;
+    let tempoMusica = 0;
+
+    function mostrarMensagem() {
+
+      if (mensagensRestantes.length > 0) {
+        const index = Math.floor(Math.random() * mensagensRestantes.length);
+        const novaMensagem = mensagensRestantes.splice(index, 1)[0];
+        mensagemEl.textContent = novaMensagem;
+      } else if (mensagemEl.textContent !== mensagemFinal) {
+        mensagemEl.textContent = mensagemFinal;
+      } else {
+        return;
+      }
+
+      fundo.classList.add("ativo");
+
+      if (!musicaTocando) {
+        som.currentTime = tempoMusica;
+        som.play();
+        musicaTocando = true;
+      }
+
+      carta.classList.add("mover-para-baixo");
+      cartaAberta = true;
+    }
+
+    function esconderMensagem() {
+      fundo.classList.remove("ativo");
+      mensagensRestantes = [...mensagensOriginais];
+      mensagemEl.textContent = "Clica na cartinha do mozi! 💌";
+
+      if (cartaAberta) {
+        carta.classList.remove("mover-para-baixo");
+        cartaAberta = false;
+
+        if (musicaTocando) {
+          tempoMusica = som.currentTime;
+          som.pause();
+          musicaTocando = false;
+        }
+      }
+    }
+
+    const emojis = ["🥰", "❤️", "🍬"];
+    const imagens = [
+      'nozes.jpg',
+      'nozes2.jpg',
+      'nozes3.jpg'
+    ];
+
+    function criarEmojiOuImagemCaindo() {
+      const item = document.createElement("div");
+      item.classList.add(Math.random() < 0.5 ? "emoji-caindo" : "imagem-caindo");
+
+      const isEmoji = Math.random() < 0.5;
+
+      if (isEmoji) {
+        item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        item.style.fontSize = `${1.5 + Math.random() * 1.5}rem`;
+      } else {
+        const img = document.createElement("img");
+        img.src = imagens[Math.floor(Math.random() * imagens.length)];
+        img.style.width = `${30 + Math.random() * 50}px`;
+        img.style.height = "auto";
+        item.appendChild(img);
+      }
+
+      item.style.left = `${Math.random() * 100}%`;
+
+      document.body.appendChild(item);
+
+      setTimeout(() => item.remove(), 5000);
+    }
+
+    setInterval(criarEmojiOuImagemCaindo, 300);
+  </script>
+</body>
+</html>
